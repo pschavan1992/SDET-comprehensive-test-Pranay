@@ -348,7 +348,38 @@ In "Field to Test," select Response Code.
 In "Patterns to Test," click Add and enter 200.
 Add Listeners: Right-click on Thread Group -> Add -> Listener -> Assertion Results (and also View Results Tree to see details).
 Run the Test: Click the green Start button to execute and verify the results in the Assertion Results listener.
-////////////////////////////////
+
+
+Program 10 *
+
+Import pytest
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+
+//Pytest Fixture to initialize and close the browser
+@pytest.fixture
+def driver():
+    driver = webdriver.Chrome()
+    driver.maximize_window()
+    yield driver
+    driver.quit()
+
+def test_verify_w3schools_logo(driver):
+    # Launch the browser and open the URL
+    driver.get("https://www.w3schools.com/") #
+    
+    # Locate the logo using an appropriate selector
+    # Typically, the logo has an ID or a specific class
+    try:
+        logo = driver.find_element(By.ID, "w3-logo") # Common ID for W3Schools logo
+        assert logo.is_displayed() #
+        print("W3Schools logo is present on the page.")
+    except Exception as e:
+        pytest.fail(f"Logo not found: {e}")
+To Run:
+Open your terminal and run the command: pytest test_w3schools.py
+
+
 
 
 
